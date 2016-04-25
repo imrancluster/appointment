@@ -1,0 +1,11 @@
+name = Codemate Appoinment
+description = Codemate Appointment is a simple module to manage appointment.
+core = 7.x
+package = Codemate
+version = 7.x-1.0
+dependencies[] = date
+dependencies[] = email
+dependencies[] = views
+
+;scripts[] = js/appointment.js
+stylesheets[all][] = css/appointment.css

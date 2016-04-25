@@ -1,0 +1,57 @@
+<?php
+/**
+ * @file
+ * appointment.install
+ */
+
+/**
+ * Implements hook_shema()
+ */
+function appointment_schema() {
+    $schema['appointment'] = array(
+        'description' => 'TODO: please describe this table!',
+        'fields' => array(
+            'id' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'serial',
+                'not null' => TRUE,
+            ),
+            'name' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'varchar',
+                'length' => '255',
+                'not null' => TRUE,
+            ),
+            'email' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'varchar',
+                'length' => '255',
+                'not null' => TRUE,
+            ),
+            'date' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'int',
+                'not null' => TRUE,
+            ),
+            'user' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'int',
+                'not null' => TRUE,
+            ),
+            'created' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'int',
+                'not null' => TRUE,
+            ),
+            'updated' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'int',
+                'not null' => TRUE,
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+    return $schema;
+}
+
+?>

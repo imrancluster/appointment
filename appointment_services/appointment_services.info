@@ -1,0 +1,9 @@
+name = Appointment Services
+description = Appointment RESTFull Services module provide REST services for CRUD Appointment.
+core = 7.x
+package = Codemate
+version = 7.x-1.0
+project = appointment
+
+dependencies[] = services
+dependencies[] = appointment

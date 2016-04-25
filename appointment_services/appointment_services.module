@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @file
+ * appointment_services.module
+ */
+
+/**
+ * implement hook_services_resources()
+ * Create your custom service
+ */
+function appointment_services_services_resources() {
+
+    return array(
+        'appointment' => array(
+            'index' => array(
+                'help' => 'Retrieve appointmet',
+                'file' => array('type' => 'inc', 'module' => 'appointment_services', 'name' => 'resources/appointment.resource'),
+                'callback' => 'appointmentRetrieve',
+                'access callback' => 'appointmentServiceAccess',
+            ),
+            'create' => array(
+                'help' => 'Create appointment',
+                'file' => array('type' => 'inc', 'module' => 'appointment_services', 'name' => 'resources/appointment.resource'),
+                'callback' => 'appointmentCreate',
+                'access callback' => 'appointmentServiceAccess',
+                'args'  => array(
+                    array(
+                        'name' => 'appointment',
+                        'optional' => FALSE,
+                        'source' => 'data',
+                        'description' => '',
+                        'type' => 'array',
+                    ),
+                ),
+            ),
+            'update' => array(
+                'help' => 'Updates appointment',
+                'file' => array('type' => 'inc', 'module' => 'appointment_services', 'name' => 'resources/appointment.resource'),
+                'callback' => 'appointmentUpdate',
+                'access callback' => 'appointmentServiceAccess',
+                'args'  => array(
+                    array(
+                        'name'  => 'appointment_id',
+                        'type'  => 'string',
+                        'description' => 'Update appointment by appointment_id.',
+                        'source' => array('path' => 0),
+                        'optional' => FALSE,
+                    ),
+                    array(
+                        'name' => 'appointment',
+                        'optional' => FALSE,
+                        'source' => 'data',
+                        'description' => '',
+                        'type' => 'array',
+                    ),
+                ),
+            ),
+            'delete' => array(
+                'help' => 'Delete appointment',
+                'file' => array('type' => 'inc', 'module' => 'appointment_services', 'name' => 'resources/appointment.resource'),
+                'callback' => 'appointmentDelete',
+                'access callback' => 'appointmentServiceAccess',
+                'args'  => array(
+                    array(
+                        'name'  => 'appointment_id',
+                        'type'  => 'string',
+                        'description' => 'Delete appointment by appointment_id.',
+                        'source' => array('path' => 0),
+                        'optional' => FALSE,
+                    ),
+                ),
+            ),
+        ),
+
+    );
+}
+
+/**
+ * @return bool
+ */
+function appointmentServiceAccess()
+{
+    return true;
+}

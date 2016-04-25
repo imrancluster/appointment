@@ -1,0 +1,119 @@
+<?php
+/**
+ * @file
+ * Code for the Appointment.
+ */
+
+/**
+ * Implements them_permission().
+ */
+function appointment_theme() {
+    return array(
+        'appointment_dashboard' => array(
+            'variables' => array('items' => NULL),
+            'template'  => 'template/appointment_dashboard',
+        ),
+    );
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function appointment_permission() {
+    return array(
+        'access appointment'  => array(
+            'title'         => t('Access appointment page'),
+            'description'   => t('Access for appointment'),
+        ),
+        'access appointment edit'  => array(
+            'title'         => t('Access appointment edit'),
+            'description'   => t('Access for appointment edit'),
+        ),
+    );
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function appointment_menu()
+{
+
+    $items = array();
+
+    $items['appointment-dashboard/%/edit'] = array(
+        'title'             => 'Update Appointment',
+        'page callback'     => 'drupal_get_form',
+        'page arguments'    => array('appointment_form', 1),
+        'access arguments'  =>  array('access appointment edit'),
+        'file'              => 'appointment.inc',
+        'type'              => MENU_CALLBACK,
+    );
+
+    $items['appointment/%/delete'] = array(
+        'title'             => 'Delete Appointment',
+        'page callback'     => 'deleteAppointment',
+        'page arguments'    => array(1),
+        'access arguments'  =>  array('access appointment delete'),
+        'file'              => 'appointment.inc',
+        'type'              => MENU_CALLBACK,
+    );
+
+    $items['appointment/%/remind'] = array(
+        'title'             => 'Delete Appointment',
+        'page callback'     => 'remindAppointment',
+        'page arguments'    => array(1),
+        'access arguments'  =>  array('access appointment'),
+        'file'              => 'appointment.inc',
+        'type'              => MENU_CALLBACK,
+    );
+
+    $items['appointment-dashboard'] = array(
+        'title'             => t('Appointment Dashboard'),
+        'type'              => MENU_CALLBACK,
+        'page callback'     => 'appointmentDashboard',
+        'file'              => 'appointment.inc',
+        'access arguments'  => array('access appointment'),
+    );
+
+    return $items;
+}
+
+/**
+ * @param $data
+ * @return DatabaseStatementInterface|int
+ * @throws Exception
+ */
+function addAppointment($data)
+{
+    $id = db_insert('appointment')
+        ->fields($data)
+        ->execute();
+
+    return $id;
+}
+
+function updateAppointment($data, $id)
+{
+    $updated = db_update('appointment')
+        ->fields($data)
+        ->condition('id', $id)
+        ->execute();
+
+    return $updated;
+}
+
+/**
+ * @param $date
+ * @return bool
+ */
+function isValidDateForAppointmet($date) {
+    $result = db_select('appointment', 'a')
+        ->fields('a')
+        ->condition('date', strtotime($date))
+        ->execute()
+        ->fetchAssoc();
+
+    return $result;
+}
